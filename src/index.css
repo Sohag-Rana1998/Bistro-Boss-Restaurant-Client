@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Inter:wght@100..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.inter {
+  font-family: "Inter", sans-serif;
+}
+
+.cinzel {
+  font-family: "Cinzel", serif;
+}
+
+nav ul li ul.dropDown {
+  display: none;
+  background-color: #e9edf1;
+  position: absolute;
+  width: 200px;
+  right: 0px;
+  border-radius: 15px;
+}
+
+nav ul li:hover ul.dropDown {
+  display: block;
+  cursor: pointer;
+}
+
+.btn-bg {
+  background-color: #0766AD;
+}
+
+.thumbs-wrapper {
+  width: 1990px;
+}
+
+.thumbs {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width:700px) {
+  .thumbs {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+
+@media screen and (min-width:601px) and (max-width:992px) {
+  .thumbs {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
