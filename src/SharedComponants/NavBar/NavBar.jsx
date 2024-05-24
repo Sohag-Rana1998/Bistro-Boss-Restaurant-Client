@@ -1,15 +1,18 @@
 import { Avatar } from '@material-tailwind/react';
 import { useContext, useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-
+import { FaShoppingCart } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
+import useCartsData from '../../hooks/useCartsData';
 
 const NavBar = () => {
   const localTheme = localStorage.getItem('theme');
   const { user, logOut } = useContext(AuthContext);
   const [theme, setTheme] = useState(localTheme);
   const [type, setType] = useState(false);
+  const { cart } = useCartsData();
+  console.log(cart);
 
   useEffect(() => {
     localStorage.setItem('theme', theme);
@@ -102,7 +105,7 @@ const NavBar = () => {
   );
 
   const Links = (
-    <div className="flex flex-col inter text-white  lg:flex-row gap-2">
+    <div className="flex flex-col inter text-white  lg:flex-row gap-1">
       <li>
         <NavLink
           to="/"
@@ -133,7 +136,7 @@ const NavBar = () => {
       </li>
       <li>
         <NavLink
-          to="/applied-jobs"
+          to="/dashboard"
           className={({ isActive, isPending }) =>
             isActive
               ? 'border-2 font-bold text-[#EEFF25]'
@@ -171,6 +174,23 @@ const NavBar = () => {
           }
         >
           OUR SHOP
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/dashboard/my-cart"
+          className={({ isActive, isPending }) =>
+            isActive
+              ? 'border-2 font-bold text-[#EEFF25]'
+              : isPending
+              ? 'pending'
+              : ''
+          }
+        >
+          <button className="flex items-center gap-2 bg-gray-300 rounded-md px-1">
+            <FaShoppingCart className="text-2xl text-black" />
+            <div className="badge badge-secondary">+{cart.length}</div>
+          </button>
         </NavLink>
       </li>
     </div>
@@ -258,7 +278,7 @@ const NavBar = () => {
         <div className="block md:hidden ">{themeButton}</div>
       </div>
 
-      <div className="navbar-end hidden md:flex lg:flex">
+      <div className="justify-end border w-[80%] hidden md:flex lg:flex">
         <div className="navbar-center hidden  lg:flex">
           <ul className="menu menu-horizontal px-1"> {Links}</ul>
         </div>
@@ -277,12 +297,6 @@ const NavBar = () => {
                         }
                         className="mr-4 cursor-pointer bg-no-repeat bg-cover bg-[url(https://i.ibb.co/zmbRY07/images.png)]"
                       />
-                      <button
-                        onClick={handleLogout}
-                        className="btn hover:bg-blue-500 bg-gray-500 text-white"
-                      >
-                        Log Out
-                      </button>
                     </div>
                     <ul className="dropDown">
                       <div className="w-auto bg-[#006740] bg-opacity-50 dropdownMenu duration-500   z-10   rounded-xl p-3   ">
@@ -295,6 +309,12 @@ const NavBar = () => {
                               User Profile
                             </button>
                           </Link>
+                          <button
+                            onClick={handleLogout}
+                            className="btn hover:bg-blue-500 bg-gray-500 text-white"
+                          >
+                            Log Out
+                          </button>
                         </div>
                       </div>
                     </ul>

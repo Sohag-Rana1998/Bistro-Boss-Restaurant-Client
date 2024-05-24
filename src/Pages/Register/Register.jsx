@@ -1,23 +1,27 @@
-import { Link, ScrollRestoration, useNavigate } from 'react-router-dom';
+import {
+  Link,
+  ScrollRestoration,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { Button } from '@material-tailwind/react';
 import { Helmet } from 'react-helmet-async';
 import { useContext, useEffect, useState } from 'react';
-
 import { IoEye, IoEyeOff } from 'react-icons/io5';
-import { FaGithub } from 'react-icons/fa6';
 import Swal from 'sweetalert2';
-
 import { AuthContext } from '../../AuthProvider/AuthProvider';
-
-// import toast from 'react-hot-toast';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
+import SocialLogin from '../../Components/Shared/SocialLogin/SocialLogin';
 
 const Register = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const axiosPublic = useAxiosPublic();
   const [type, setType] = useState(false);
   const {
     createUserByEmailAndPassword,
-    signInWithGithub,
-    signInWithGoogle,
+
     handleUpdateProfile,
   } = useContext(AuthContext);
 
@@ -30,110 +34,28 @@ const Register = () => {
   } = useForm();
 
   const onSubmit = data => {
-    console.log(data);
     createUserByEmailAndPassword(data.email, data.password)
       .then(result => {
-        console.log(result.user);
-        handleUpdateProfile(data.name, data.photo);
-        reset();
+        const userInfo = {
+          name: data.name,
+          email: data.email,
+        };
+        axiosPublic.post('/users', userInfo).then(res => {
+          console.log(res.data);
+
+          console.log(result.user);
+          handleUpdateProfile(data.name, data.photo);
+          reset();
+          Swal.fire({
+            icon: 'success',
+            title:
+              'Congratulation! Your account has been registered successfully',
+            showConfirmButton: true,
+          });
+          navigate(location.state || '/');
+        });
       })
       .catch(errors => console.log(errors.message));
-  };
-
-  // const handleSubmit = e => {
-  //   e.preventDefault();
-  //   const name = e.target.name.value;
-  //   const photo = e.target.photo.value;
-  //   const email = e.target.email.value;
-  //   const password = e.target.password.value;
-
-  //   if (!/[A-Z]/.test(password)) {
-  //     toast('Your Password Should Have One Uppercase Letter.');
-  //     return;
-  //   } else if (!/[a-z]/.test(password)) {
-  //     toast('Your Password Should Have One Lowercase Letter.');
-  //     return;
-  //   } else if (password.length < 6) {
-  //     toast('Password Must Be Minimum 06 Character.');
-  //     return;
-  //   }
-  //   // console.log(name, email, photo, password);
-
-  //   createUserByEmailAndPassword(email, password)
-  //     .then(() => {
-  //       emailVerify();
-  //       updateProfile(auth.currentUser, {
-  //         displayName: name,
-  //         photoURL: photo,
-  //       })
-  //         .then(() => {})
-  //         .catch(error => {
-  //           console.error(error);
-  //         });
-
-  //       navigate('/');
-
-  //       Swal.fire({
-  //         icon: 'success',
-  //         title: 'Congratulation! Your account is registered successfully',
-  //         showConfirmButton: true,
-  //       });
-  //     })
-  //     .catch(error => {
-  //       console.error(error.message);
-  //       Swal.fire({
-  //         icon: 'error',
-  //         title: error.message,
-  //         showConfirmButton: false,
-  //         timer: 2000,
-  //       });
-  //     });
-  // };
-
-  const navigate = useNavigate();
-  // console.log(navigate);
-  const handleGoogleLogin = () => {
-    signInWithGoogle()
-      .then(() => {
-        // console.log(result.user);
-        navigate('/');
-        Swal.fire({
-          icon: 'success',
-          title: 'Log In successful',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      })
-      .catch(error => {
-        console.error(error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Something went wrong. Please try again.',
-          showConfirmButton: true,
-        });
-      });
-  };
-  const handleGithubLogin = () => {
-    signInWithGithub()
-      .then(() => {
-        // console.log(result.user);
-        navigate('/');
-
-        Swal.fire({
-          icon: 'success',
-          title: 'Log In successful',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      })
-      .catch(error => {
-        console.error(error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Something went wrong. Please try again.',
-          showConfirmButton: true,
-        });
-      });
   };
 
   const [loading, setLoading] = useState(true);
@@ -303,39 +225,7 @@ const Register = () => {
                 </p>
               </div>
             </form>
-            <div className="flex justify-around items-center ">
-              <div className="divider divider-primary   w-full"></div>
-              <h2>OR</h2>
-              <div className="divider divider-primary  w-full"></div>
-            </div>
-            <div className="flex flex-col items-center gap-4">
-              <Button
-                onClick={handleGoogleLogin}
-                size="lg"
-                variant="outlined"
-                color="light-blue"
-                className="flex items-center gap-3 w-full"
-              >
-                <img
-                  src="https://docs.material-tailwind.com/icons/google.svg"
-                  alt="metamask"
-                  className="h-6 w-6"
-                />
-                Continue with Google
-              </Button>
-              <Button
-                onClick={handleGithubLogin}
-                size="lg"
-                variant="gradient"
-                color="light-blue"
-                className="group relative flex w-full py-4 items-center gap-3 overflow-hidden pr-[72px]"
-              >
-                CONTINUE with Github
-                <span className="absolute right-0 grid h-full w-12 place-items-center bg-light-blue-600 transition-colors group-hover:bg-light-blue-700">
-                  <FaGithub className="text-4xl" />
-                </span>
-              </Button>
-            </div>
+            <SocialLogin />
           </div>
         </div>
       </div>

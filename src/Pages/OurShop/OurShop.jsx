@@ -10,8 +10,7 @@ const OurShop = () => {
   const { category } = useParams();
   const categories = ['salad', 'pizza', 'soup', 'dessert', 'drinks'];
   const initialIndex = categories.indexOf(category || 'salad');
-  console.log(initialIndex);
-  console.log(category);
+
   const [tabIndex, setTabIndex] = useState(initialIndex);
   const { items } = useMenuData();
   const drinks = items?.filter(item => item.category == 'drinks');

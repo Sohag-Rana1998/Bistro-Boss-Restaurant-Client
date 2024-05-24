@@ -9,22 +9,21 @@ import {
   LoadCanvasTemplate,
   validateCaptcha,
 } from 'react-simple-captcha';
-import { Button } from '@material-tailwind/react';
+
 import { Helmet } from 'react-helmet-async';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { IoEye, IoEyeOff } from 'react-icons/io5';
 import { toast } from 'react-hot-toast';
 import Swal from 'sweetalert2';
-import { FaGithub } from 'react-icons/fa6';
 
 import { AuthContext } from '../../AuthProvider/AuthProvider';
+import SocialLogin from '../../Components/Shared/SocialLogin/SocialLogin';
 
 const Login = () => {
   const captChaRef = useRef();
   const [type, setType] = useState(false);
 
-  const { signInWithEmail, signInWithGoogle, signInWithGithub } =
-    useContext(AuthContext);
+  const { signInWithEmail } = useContext(AuthContext);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -54,52 +53,6 @@ const Login = () => {
         });
 
         navigate(location?.state || '/');
-      })
-      .catch(error => {
-        console.error(error);
-        Swal.fire({
-          icon: 'error',
-          title:
-            'Something went wrong. Please provide a registered email and password.',
-          showConfirmButton: true,
-        });
-      });
-  };
-  const handleGoogleLogin = () => {
-    signInWithGoogle()
-      .then(() => {
-        // console.log(result.user);
-
-        navigate(location?.state || '/');
-        Swal.fire({
-          icon: 'success',
-          title: 'Log In successful',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      })
-      .catch(error => {
-        console.error(error);
-        Swal.fire({
-          icon: 'error',
-          title:
-            'Something went wrong. Please provide a registered email and password.',
-          showConfirmButton: true,
-        });
-      });
-  };
-  const handleGithubLogin = () => {
-    signInWithGithub()
-      .then(() => {
-        // console.log(result.user);
-
-        navigate(location?.state || '/');
-        Swal.fire({
-          icon: 'success',
-          title: 'Log In successful',
-          showConfirmButton: false,
-          timer: 1500,
-        });
       })
       .catch(error => {
         console.error(error);
@@ -229,39 +182,7 @@ const Login = () => {
                 </p>
               </div>
             </form>
-            <div className="flex justify-around items-center ">
-              <div className="divider divider-primary   w-full"></div>
-              <h2>OR</h2>
-              <div className="divider divider-primary  w-full"></div>
-            </div>
-            <div className="flex flex-col items-center gap-4">
-              <Button
-                onClick={handleGoogleLogin}
-                size="lg"
-                variant="outlined"
-                color="blue-gray"
-                className="flex items-center w-full gap-3"
-              >
-                <img
-                  src="https://docs.material-tailwind.com/icons/google.svg"
-                  alt="metamask"
-                  className="h-6 w-6"
-                />
-                Continue with Google
-              </Button>
-              <Button
-                onClick={handleGithubLogin}
-                size="lg"
-                variant="gradient"
-                color="light-blue"
-                className="group relative flex w-full py-4 items-center gap-3 overflow-hidden pr-[72px]"
-              >
-                CONTINUE with Github
-                <span className="absolute right-0 grid h-full w-12 place-items-center bg-light-blue-600 transition-colors group-hover:bg-light-blue-700">
-                  <FaGithub className="text-4xl" />
-                </span>
-              </Button>
-            </div>
+            <SocialLogin />
           </div>
         </div>
       </div>
