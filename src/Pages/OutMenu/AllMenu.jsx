@@ -1,7 +1,6 @@
 import SectionTitle from '../../Components/SectionTitle/SectionTitle';
 
 import SharedMenuItems from '../../Components/SharedMenuItems/SharedMenuItems';
-import useMenuData from '../../hooks/useMenuData';
 
 import CoverImg1 from '../../../public/menu/banner3.jpg';
 import dessertImg2 from '../../../public/menu/dessert-bg.jpeg';
@@ -11,13 +10,14 @@ import SoupImg1 from '../../../public/menu/soup-bg.jpg';
 
 import Cover from '../../Components/Shared/Cover';
 import { Link } from 'react-router-dom';
+import useMenuData from '../../hooks/useMenuData';
 const AllMenu = () => {
-  const { items } = useMenuData();
-  const offerItem = items?.filter(item => item.category == 'offered');
-  const desserts = items?.filter(item => item.category == 'dessert');
-  const pizzas = items?.filter(item => item.category == 'pizza');
-  const salads = items?.filter(item => item.category == 'salad');
-  const soups = items?.filter(item => item.category == 'soup');
+  const { menu } = useMenuData();
+  const offerItem = menu?.filter(item => item.category == 'offered');
+  const desserts = menu?.filter(item => item.category == 'dessert');
+  const pizzas = menu?.filter(item => item.category == 'pizza');
+  const salads = menu?.filter(item => item.category == 'salad');
+  const soups = menu?.filter(item => item.category == 'soup');
   console.log(offerItem);
   return (
     <div className=" max-w-[1990px] mx-auto container">

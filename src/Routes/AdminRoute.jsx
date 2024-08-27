@@ -3,14 +3,13 @@ import useAdmin from '../hooks/useAdmin';
 import useAuth from '../hooks/useAuth';
 import PropTypes from 'prop-types';
 const AdminRoute = ({ children }) => {
-  const { user, loading, logOut } = useAuth();
+  const { user, loading } = useAuth();
   const { isAdmin, isLoading } = useAdmin();
   const location = useLocation();
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    logOut();
-    navigate('/login', { state: { from: location.pathname } });
+    navigate('/', { state: { from: location.pathname } });
   };
 
   if (loading || isLoading) {

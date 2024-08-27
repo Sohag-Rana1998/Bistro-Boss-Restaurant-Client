@@ -9,20 +9,22 @@ import SliderImg5 from '../../../../public/home/slide5.jpg';
 
 // Import Swiper styles
 import 'swiper/css';
+import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 
 // import required modules
-import { Pagination } from 'swiper/modules';
+import { Pagination, FreeMode } from 'swiper/modules';
 
 const Slider = () => {
   return (
     <Swiper
       slidesPerView={4}
       spaceBetween={10}
+      loop={true}
       pagination={{
         clickable: true,
       }}
-      modules={[Pagination]}
+      modules={[Pagination, FreeMode]}
       className="mySwiper h-[430px]  mx-auto"
     >
       <SwiperSlide>

@@ -1,32 +1,34 @@
-import axios from "axios";
-import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
-import useCartsData from "../../../hooks/useCartsData";
-import { RiDeleteBin5Line } from "react-icons/ri";
-import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
-const Cart = () => {
-  const { cart, refetch } = useCartsData();
-  console.log(cart);
-  const totalPrice = cart?.reduce((total, item) => total + item.price, 0);
-  console.log("from cart", cart);
-  const handleDelete = (id) => {
+import SectionTitle from '../../../Components/SectionTitle/SectionTitle';
+
+import { RiDeleteBin5Line } from 'react-icons/ri';
+import Swal from 'sweetalert2';
+import useMenuData from '../../../hooks/useMenuData';
+import { FaEdit } from 'react-icons/fa';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { Link } from 'react-router-dom';
+const ManageItems = () => {
+  const axiosSecure = useAxiosSecure();
+  const { menu, refetch } = useMenuData();
+
+  const handleDelete = id => {
     Swal.fire({
-      title: "Are you sure?",
+      title: 'Are you sure?',
       text: "You won't be able to revert this!",
-      icon: "warning",
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then(result => {
       if (result.isConfirmed) {
-        axios.delete(`${import.meta.env.VITE_API}/carts/${id}`).then((data) => {
+        axiosSecure.delete(`${import.meta.env.VITE_API}/menu/${id}`).then(data => {
           console.log(data.data);
           if (data.data.deletedCount > 0) {
             Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success",
+              title: 'Deleted!',
+              text: 'Your file has been deleted.',
+              icon: 'success',
+
               showConfirmButton: false,
               timer: 1500,
             });
@@ -36,29 +38,17 @@ const Cart = () => {
       }
     });
   };
+
   return (
     <div className="w-full px-10 mt-5">
       <div className="w-full">
         <SectionTitle
-          heading={"WANNA ADD MORE?"}
-          subheading={"My Cart"}
+          heading={'WANNA ADD MORE?'}
+          subheading={'My Cart'}
         ></SectionTitle>
       </div>
-      <div className="w-full text-3xl mt-5 font-bold cinzel flex justify-evenly items-center">
-        <div>Total Order: {cart?.length}</div>
-        <div>Total Price: ${totalPrice}</div>
-        <div>
-          {cart.length > 0 ? (
-            <Link to={"/dashboard/payment"}>
-              {" "}
-              <button className="btn bg-[#d1a054]">PAY</button>
-            </Link>
-          ) : (
-            <button disabled className="btn bg-[#d1a054]">
-              PAY
-            </button>
-          )}
-        </div>
+      <div className="w-full text-3xl mt-5 font-bold cinzel ">
+        <div>Total Order: {menu?.length}</div>
       </div>
 
       <div className="mt-5">
@@ -72,14 +62,15 @@ const Cart = () => {
                 <th>Item Image</th>
                 <th>Item Name</th>
                 <th> Item Price</th>
-                <th> Action</th>
+                <th> Action1</th>
+                <th> Action2</th>
               </tr>
             </thead>
 
             <tbody>
               {/* row 1 */}
-              {cart &&
-                cart.map((item, index) => (
+              {menu &&
+                menu.map((item, index) => (
                   <tr key={item._id}>
                     <th>{index + 1}</th>
                     <td>
@@ -93,6 +84,13 @@ const Cart = () => {
                     </td>
                     <td>{item.name}</td>
                     <td>{item.price}</td>
+                    <th>
+                      <Link to={`/dashboard/update-item/${item._id}`}>
+                        <button className="btn bg-red-600 ">
+                          <FaEdit className="text-white text-xl" />
+                        </button>
+                      </Link>
+                    </th>
                     <th>
                       <button
                         onClick={() => handleDelete(item._id)}
@@ -111,4 +109,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default ManageItems;

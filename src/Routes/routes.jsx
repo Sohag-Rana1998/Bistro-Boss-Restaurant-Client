@@ -12,6 +12,13 @@ import Cart from '../Pages/Dashboard/Cart/Cart';
 import AllUsers from '../Pages/Dashboard/AllUsers/AllUsers';
 import PrivateRoute from './PrivateRoute';
 import AdminRoute from './AdminRoute';
+import AddItems from '../Pages/Dashboard/AddItems/AddItems';
+import ManageItems from '../Pages/Dashboard/ManageItems/ManageItems';
+import UpdateItem from '../Pages/Dashboard/UpdateItem/UpdateItem';
+import Payment from '../Pages/Dashboard/Payment/Payment';
+import PaymentHistory from '../Pages/Dashboard/PaymentHistory/PaymentHistory';
+import AdminHome from '../Pages/Dashboard/AdminHome/AdminHome';
+import UserHome from '../Pages/Dashboard/UserHome/UserHome';
 
 const router = createBrowserRouter([
   {
@@ -53,15 +60,62 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      // users routes
       {
         path: 'my-cart',
         element: <Cart />,
       },
       {
+        path: 'payment',
+        element: <Payment />,
+      },
+      {
+        path: 'payment-history',
+        element: <PaymentHistory />,
+      },
+      {
+        path: 'user-home',
+        element: <UserHome />,
+      },
+
+      // admin routes
+      {
         path: 'all-users',
         element: (
           <AdminRoute>
             <AllUsers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'add-items',
+        element: (
+          <AdminRoute>
+            <AddItems />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'manage-items',
+        element: (
+          <AdminRoute>
+            <ManageItems />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'admin-home',
+        element: (
+          <AdminRoute>
+            <AdminHome />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: 'update-item/:id',
+        element: (
+          <AdminRoute>
+            <UpdateItem />
           </AdminRoute>
         ),
       },

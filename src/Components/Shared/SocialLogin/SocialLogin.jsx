@@ -24,7 +24,8 @@ const SocialLogin = () => {
           Swal.fire({
             icon: 'success',
             title: 'Successfully  Login',
-            showConfirmButton: true,
+            showConfirmButton: false,
+            timer: 1500,
           });
           navigate(location.state || '/');
         });

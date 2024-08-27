@@ -12,12 +12,12 @@ const OurShop = () => {
   const initialIndex = categories.indexOf(category || 'salad');
 
   const [tabIndex, setTabIndex] = useState(initialIndex);
-  const { items } = useMenuData();
-  const drinks = items?.filter(item => item.category == 'drinks');
-  const desserts = items?.filter(item => item.category == 'dessert');
-  const pizzas = items?.filter(item => item.category == 'pizza');
-  const salads = items?.filter(item => item.category == 'salad');
-  const soups = items?.filter(item => item.category == 'soup');
+  const { menu } = useMenuData();
+  const drinks = menu?.filter(item => item.category == 'drinks');
+  const desserts = menu?.filter(item => item.category == 'dessert');
+  const pizzas = menu?.filter(item => item.category == 'pizza');
+  const salads = menu?.filter(item => item.category == 'salad');
+  const soups = menu?.filter(item => item.category == 'soup');
   return (
     <div>
       <div>

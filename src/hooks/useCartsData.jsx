@@ -10,10 +10,12 @@ const useCartsData = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ['CartsData', user?.email],
+    queryKey: ['carts-Data', user?.email],
     queryFn: async () => {
-      if (user.email) {
-        const { data } = await axiosSecure.get(`/carts?email=${user.email}`);
+      if (user?.email) {
+        const { data } = await axiosSecure.get(
+          `/user-cart?email=${user?.email}`
+        );
         return data;
       }
     },

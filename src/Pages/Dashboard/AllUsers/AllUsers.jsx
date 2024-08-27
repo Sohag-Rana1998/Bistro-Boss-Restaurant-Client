@@ -1,22 +1,14 @@
-import { useQuery } from '@tanstack/react-query';
-import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 
 import SectionTitle from '../../../Components/SectionTitle/SectionTitle';
 import Swal from 'sweetalert2';
 import { FaPeopleGroup } from 'react-icons/fa6';
+import useUsersData from '../../../hooks/useUsersData';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
-
-  const { data: users = [], refetch } = useQuery({
-    queryKey: ['all-users'],
-    queryFn: async () => {
-      const { data } = await axiosSecure.get('/users');
-      return data;
-    },
-  });
-
+  const { users, refetch } = useUsersData();
   const handleMakeAdmin = id => {
     Swal.fire({
       title: 'Are you sure?',

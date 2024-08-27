@@ -40,6 +40,7 @@ const AuthProvider = ({ children }) => {
             localStorage.setItem('access-token', res.data.token);
           }
         });
+        setLoading(false);
       } else {
         localStorage.removeItem('access-token');
         console.log(user);
@@ -50,7 +51,7 @@ const AuthProvider = ({ children }) => {
     return () => {
       unSubscribe();
     };
-  }, [auth, user]);
+  }, [auth, user, axiosPublic]);
 
   const handleUpdateProfile = (name, photo) => {
     updateProfile(auth.currentUser, {
@@ -62,15 +63,17 @@ const AuthProvider = ({ children }) => {
   };
 
   const logOut = () => {
-    setLoading(false);
+    setLoading(true);
     return signOut(auth);
   };
 
   const createUserByEmailAndPassword = (email, password) => {
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   const signInWithEmail = (email, password) => {
+    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
@@ -78,10 +81,12 @@ const AuthProvider = ({ children }) => {
   const googleProvider = new GoogleAuthProvider();
 
   const signInWithGithub = () => {
+    setLoading(true);
     return signInWithPopup(auth, githubProvider);
   };
 
   const signInWithGoogle = () => {
+    setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
 

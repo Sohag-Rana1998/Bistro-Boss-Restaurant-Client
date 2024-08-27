@@ -12,18 +12,19 @@ const Card = ({ item }) => {
   const location = useLocation();
   const { user } = useAuth();
 
-  const { _id, image, name, price, recipe } = item;
+  const { _id, image, name, price, recipe, category, menuId } = item;
 
   const handleAddToCart = async () => {
     if (user && user.email) {
       // send food to database
 
       const cartData = {
-        foodId: _id,
+        foodId: menuId,
         userEmail: user.email,
         image,
         name,
         price,
+        category,
       };
       try {
         const { data } = await axiosSecure.post('/carts', cartData);

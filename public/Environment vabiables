@@ -1,0 +1,13 @@
+VITE_APIKEY= AIzaSyDRkS88EB8sqMtCuXOe4u8cUhgGv_bf2W8
+VITE_AUTHDOMAIN= bistro-boss-client-5a4bf.firebaseapp.com
+Vite_VITE_PROJECTID= bistro-boss-client-5a4bf
+Vite_STORAGEBUCKET= bistro-boss-client-5a4bf.appspot.com
+VITE_MESSAGINGSENDERID= 270715863761
+VITE_APPID= 1:270715863761:web:df98013f439a2061c0bbf0
+
+VITE_IMGBB_API_KEY=2de4c1f472c4c211f51f4b495b3bea1d
+VITE_PAYMENT_GATEWAY=pk_test_51PKjzsHyyVjPcVJxVdrFPGTKWwqdHzwGztgN5x60N1HEifAT4XAQBguG4gVOdLcnoRQqJI0e9eTHWzEVeRaN8CR700X17m2o6U
+
+VITE_API=https://bistro-boss-ecru.vercel.app
+
+http://localhost:5000/

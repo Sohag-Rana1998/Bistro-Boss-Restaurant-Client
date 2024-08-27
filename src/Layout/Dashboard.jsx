@@ -20,7 +20,7 @@ const Dashboard = () => {
   const { isAdmin } = useAdmin();
   console.log(isAdmin);
   return (
-    <div className="flex">
+    <div className="flex  items-start  mx-auto">
       <div className="w-64 bg-[#d1a054] min-h-screen">
         <div className="flex justify-center p-4">
           <Link to={'/'}>
@@ -115,21 +115,6 @@ const Dashboard = () => {
             <>
               <li className="mb-3">
                 <NavLink
-                  to={'/dashboard/my-cart'}
-                  className={({ isActive, isPending }) =>
-                    isActive
-                      ? 'border-2 w-full bg-gray-400 font-bold text-[#EEFF25]'
-                      : isPending
-                      ? 'pending'
-                      : ''
-                  }
-                >
-                  <FaShoppingCart />
-                  My Cart
-                </NavLink>
-              </li>
-              <li className="mb-3">
-                <NavLink
                   to={'/dashboard/user-home'}
                   className={({ isActive, isPending }) =>
                     isActive
@@ -141,6 +126,21 @@ const Dashboard = () => {
                 >
                   <FaHome />
                   User Home
+                </NavLink>
+              </li>
+              <li className="mb-3">
+                <NavLink
+                  to={'/dashboard/my-cart'}
+                  className={({ isActive, isPending }) =>
+                    isActive
+                      ? 'border-2 w-full bg-gray-400 font-bold text-[#EEFF25]'
+                      : isPending
+                      ? 'pending'
+                      : ''
+                  }
+                >
+                  <FaShoppingCart />
+                  My Cart
                 </NavLink>
               </li>
               <li className="mb-3">
@@ -269,7 +269,7 @@ const Dashboard = () => {
           </li>
         </ul>
       </div>
-      <div className="flex-1">
+      <div className="flex-1 py-10 mx-6">
         <Outlet />
       </div>
     </div>

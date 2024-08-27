@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useAuth from './useAuth';
 
 const axiosSecure = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: `${import.meta.env.VITE_API}`,
 });
 
 const useAxiosSecure = () => {
@@ -27,7 +27,7 @@ const useAxiosSecure = () => {
     },
     async error => {
       // console.log(error);
-      const status = error.response.status;
+      const status = error.response?.status;
 
       if (status === 401 || status === 403) {
         await logOut();
